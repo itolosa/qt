@@ -213,8 +213,12 @@ bool QPdfEngine::end()
 
     d->catalog = d->addXrefEntry(-1);
     d->xprintf("<<\n"
-               "/Type /Catalog\n"
-               "/Pages %d 0 R\n", d->pageRoot);
+               "/Type /Catalog\n");
+
+    if (!d->printScaling)
+        d->xprintf("/ViewerPreferences /PrintScaling /None\n");
+
+    d->xprintf("/Pages %d 0 R\n", d->pageRoot);
     if (d->outlineRoot)
         d->xprintf("/Outlines %d 0 R\n"
                    "/PageMode /UseOutlines\n", d->outlineRoot->obj);
@@ -470,6 +474,7 @@ QPdfEnginePrivate::QPdfEnginePrivate(QPrinter::PrinterMode m)
     outlineRoot = NULL;
     outlineCurrent = NULL;
     fullPage = false;
+    printScaling = false;
 }
 
 QPdfEnginePrivate::~QPdfEnginePrivate()

@@ -269,6 +269,7 @@ public:
     QPrinter::DuplexMode duplex;
     bool collate;
     bool fullPage;
+    bool printScaling;
     bool embedFonts;
     int copies;
     int resolution;
